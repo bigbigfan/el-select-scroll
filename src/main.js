@@ -6,6 +6,11 @@ import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 
+// 开发环境
+if (process.env.NODE_ENV === 'development') {
+  require('./mock/index')
+}
+
 Vue.config.productionTip = false
 // Vue.directive('loadmore', {
 //   bind (el, binding, vnode) {
