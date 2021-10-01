@@ -1,10 +1,16 @@
 <template>
   <div class='app'>
     <span>{{name}}</span>
-    <selectScroll :dataList='dataList' :page='page' :request='getData' v-model='selected' :hasMore="more"></selectScroll>
-    <!-- <el-select :dataList='dataList1' v-model='selected1'>
-      <el-option v-for="item in dataList1" :key="item.id" :label="item.label" :value="item.value"></el-option>
-    </el-select> -->
+    <selectScroll
+      :dataList='dataList'
+      :dictLabel="'dictLabel'"
+      :dictValue="'dictValue'"
+      :hasMore='more'
+      multiple
+      :page='page'
+      :request='getData'
+      v-model='selected'
+    ></selectScroll>
   </div>
 </template>
 <script>
@@ -18,12 +24,10 @@ export default ({
   data () {
     return {
       name: 'wzf',
-      selected: '',
-      selected1: '',
+      selected: [],
       page: 1,
       more: true,
-      dataList: [],
-      dataList1: []
+      dataList: []
       // params: {
       //   cur: 1,
       //   size: 10
@@ -81,9 +85,9 @@ export default ({
 
       // 访问后端接口API
       if (more) {
-        request.post('/data/employeeList', {cur: page, size: size}).then(res => {
+        request.post('/data/employeeList', { cur: page, size: size }).then(res => {
           console.log(res)
-          let {page, size, total, data} = res
+          let { page, size, total, data } = res
           this.dataList = [...this.dataList, ...data]
           this.page = res.page
           this.more = page * size < total
